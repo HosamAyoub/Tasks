@@ -165,3 +165,24 @@ u8 DIO_u8GetPinValue(u8 Copy_u8Port, u8 Copy_u8Pin, u8 *Copy_u8Variable)
 	}
 	return Local_u8RunState;
 }
+
+u8 DIO_u8TogglePin(u8 Copy_u8Port, u8 Copy_u8Pin)
+{
+	u8 Local_u8RunState = DIO_OK;
+	if((Copy_u8Pin >= DIO_PIN0) && (Copy_u8Pin <= DIO_PIN7))
+	{
+		switch(Copy_u8Port)
+		{
+		case DIO_PORTA: TOG_BIT(PORTA, Copy_u8Pin); break;
+		case DIO_PORTB:	TOG_BIT(PORTB, Copy_u8Pin); break;
+		case DIO_PORTC: TOG_BIT(PORTC, Copy_u8Pin); break;
+		case DIO_PORTD: TOG_BIT(PORTD, Copy_u8Pin); break;
+		default: Local_u8RunState = DIO_ERROR;
+		}
+	}
+	else
+	{
+		Local_u8RunState = DIO_ERROR;
+	}
+	return Local_u8RunState;
+}

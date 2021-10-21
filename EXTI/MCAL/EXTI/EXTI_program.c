@@ -115,7 +115,5 @@ void __vector_1 (void) __attribute__((signal));
 void __vector_1 (void)
 {
 	/*Toggle LED*/
-	DIO_u8SetPinValue(DIO_PORTC, DIO_PIN0, DIO_PIN_HIGH);
-	_delay_ms(500);
-	DIO_u8SetPinValue(DIO_PORTC, DIO_PIN0, DIO_PIN_LOW);
+	DIO_u8TogglePin(DIO_PORTC, DIO_PIN0);
 }
