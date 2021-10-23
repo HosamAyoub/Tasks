@@ -11,25 +11,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   3 .stab         0000330c  00000000  00000000  00002a14  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      000017b2  00000000  00000000  00005d20  2**0
+  4 .stabstr      000017a9  00000000  00000000  00005d20  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_aranges 00000140  00000000  00000000  000074d2  2**0
+  5 .debug_aranges 00000140  00000000  00000000  000074c9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_pubnames 00000170  00000000  00000000  00007612  2**0
+  6 .debug_pubnames 00000170  00000000  00000000  00007609  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00001c49  00000000  00000000  00007782  2**0
+  7 .debug_info   00001c49  00000000  00000000  00007779  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 00000eeb  00000000  00000000  000093cb  2**0
+  8 .debug_abbrev 00000eeb  00000000  00000000  000093c2  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000dad  00000000  00000000  0000a2b6  2**0
+  9 .debug_line   00000dad  00000000  00000000  0000a2ad  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00000160  00000000  00000000  0000b064  2**2
+ 10 .debug_frame  00000160  00000000  00000000  0000b05c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    0000028d  00000000  00000000  0000b1c4  2**0
+ 11 .debug_str    0000028d  00000000  00000000  0000b1bc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    000007ce  00000000  00000000  0000b451  2**0
+ 12 .debug_loc    000007ce  00000000  00000000  0000b449  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000050  00000000  00000000  0000bc1f  2**0
+ 13 .debug_ranges 00000050  00000000  00000000  0000bc17  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -5886,9 +5886,9 @@ void H_Bridge_voidStop (void)
     2648:	08 95       	ret
 
 0000264a <main>:
-void ToggleLed1 (void);
-void ToggleLed2 (void);
-void ToggleLed3 (void);
+void Toggle1 (void);
+void Toggle2 (void);
+void Toggle3 (void);
 
 void main (void)
 {
@@ -5896,7 +5896,7 @@ void main (void)
     264c:	cf 93       	push	r28
     264e:	cd b7       	in	r28, 0x3d	; 61
     2650:	de b7       	in	r29, 0x3e	; 62
-	DIO_u8SetPortDirection(DIO_PORTA, LEDS);
+	DIO_u8SetPortDirection(DIO_PORTA, S);
     2652:	80 e0       	ldi	r24, 0x00	; 0
     2654:	61 e9       	ldi	r22, 0x91	; 145
     2656:	0e 94 dd 07 	call	0xfba	; 0xfba <DIO_u8SetPortDirection>
@@ -5906,7 +5906,7 @@ void main (void)
     265e:	80 e0       	ldi	r24, 0x00	; 0
     2660:	60 e0       	ldi	r22, 0x00	; 0
     2662:	0e 94 b3 0f 	call	0x1f66	; 0x1f66 <LCD_voidGoToXY>
-	LCD_voidSendString("LCD1");
+	LCD_voidSendString("LED1");
     2666:	80 e6       	ldi	r24, 0x60	; 96
     2668:	90 e0       	ldi	r25, 0x00	; 0
     266a:	0e 94 17 10 	call	0x202e	; 0x202e <LCD_voidSendString>
@@ -5914,7 +5914,7 @@ void main (void)
     266e:	80 e0       	ldi	r24, 0x00	; 0
     2670:	66 e0       	ldi	r22, 0x06	; 6
     2672:	0e 94 b3 0f 	call	0x1f66	; 0x1f66 <LCD_voidGoToXY>
-	LCD_voidSendString("LCD2");
+	LCD_voidSendString("LED2");
     2676:	85 e6       	ldi	r24, 0x65	; 101
     2678:	90 e0       	ldi	r25, 0x00	; 0
     267a:	0e 94 17 10 	call	0x202e	; 0x202e <LCD_voidSendString>
@@ -5922,7 +5922,7 @@ void main (void)
     267e:	80 e0       	ldi	r24, 0x00	; 0
     2680:	6c e0       	ldi	r22, 0x0C	; 12
     2682:	0e 94 b3 0f 	call	0x1f66	; 0x1f66 <LCD_voidGoToXY>
-	LCD_voidSendString("LCD3");
+	LCD_voidSendString("LED3");
     2686:	8a e6       	ldi	r24, 0x6A	; 106
     2688:	90 e0       	ldi	r25, 0x00	; 0
     268a:	0e 94 17 10 	call	0x202e	; 0x202e <LCD_voidSendString>
@@ -5980,15 +5980,15 @@ void main (void)
     26f2:	62 e0       	ldi	r22, 0x02	; 2
     26f4:	41 e0       	ldi	r20, 0x01	; 1
     26f6:	0e 94 d9 09 	call	0x13b2	; 0x13b2 <DIO_u8SetPinValue>
-	EXTI_voidInt0SetCallBack(&ToggleLed1);
+	EXTI_voidInt0SetCallBack(&Toggle1);
     26fa:	8e e8       	ldi	r24, 0x8E	; 142
     26fc:	93 e1       	ldi	r25, 0x13	; 19
     26fe:	0e 94 0e 07 	call	0xe1c	; 0xe1c <EXTI_voidInt0SetCallBack>
-	EXTI_voidInt1SetCallBack(&ToggleLed2);
+	EXTI_voidInt1SetCallBack(&Toggle2);
     2702:	8a ec       	ldi	r24, 0xCA	; 202
     2704:	93 e1       	ldi	r25, 0x13	; 19
     2706:	0e 94 53 07 	call	0xea6	; 0xea6 <EXTI_voidInt1SetCallBack>
-	EXTI_voidInt2SetCallBack(&ToggleLed3);
+	EXTI_voidInt2SetCallBack(&Toggle3);
     270a:	86 e0       	ldi	r24, 0x06	; 6
     270c:	94 e1       	ldi	r25, 0x14	; 20
     270e:	0e 94 98 07 	call	0xf30	; 0xf30 <EXTI_voidInt2SetCallBack>
@@ -5998,19 +5998,19 @@ void main (void)
     2716:	0e 94 bf 05 	call	0xb7e	; 0xb7e <EXTI_voidInit>
     271a:	ff cf       	rjmp	.-2      	; 0x271a <main+0xd0>
 
-0000271c <ToggleLed1>:
+0000271c <Toggle1>:
 
 	}
 }
 
-void ToggleLed1 (void)
+void Toggle1 (void)
 {
     271c:	df 93       	push	r29
     271e:	cf 93       	push	r28
     2720:	0f 92       	push	r0
     2722:	cd b7       	in	r28, 0x3d	; 61
     2724:	de b7       	in	r29, 0x3e	; 62
-	/*Toggle LED*/
+	/*Toggle */
 	u8 Local_u8PinState;
 	DIO_u8TogglePin(DIO_PORTA, DIO_PIN0);
     2726:	80 e0       	ldi	r24, 0x00	; 0
@@ -6027,7 +6027,7 @@ void ToggleLed1 (void)
 	if (Local_u8PinState == 0)
     273e:	89 81       	ldd	r24, Y+1	; 0x01
     2740:	88 23       	and	r24, r24
-    2742:	89 f4       	brne	.+34     	; 0x2766 <ToggleLed1+0x4a>
+    2742:	89 f4       	brne	.+34     	; 0x2766 <Toggle1+0x4a>
 	{
 		LCD_voidGoToXY(LCD_ROW1, LCD_COLUMN1);
     2744:	81 e0       	ldi	r24, 0x01	; 1
@@ -6045,12 +6045,12 @@ void ToggleLed1 (void)
     275c:	8f e6       	ldi	r24, 0x6F	; 111
     275e:	90 e0       	ldi	r25, 0x00	; 0
     2760:	0e 94 17 10 	call	0x202e	; 0x202e <LCD_voidSendString>
-    2764:	13 c0       	rjmp	.+38     	; 0x278c <ToggleLed1+0x70>
+    2764:	13 c0       	rjmp	.+38     	; 0x278c <Toggle1+0x70>
 	}
 	else if (Local_u8PinState == 1)
     2766:	89 81       	ldd	r24, Y+1	; 0x01
     2768:	81 30       	cpi	r24, 0x01	; 1
-    276a:	81 f4       	brne	.+32     	; 0x278c <ToggleLed1+0x70>
+    276a:	81 f4       	brne	.+32     	; 0x278c <Toggle1+0x70>
 	{
 		LCD_voidGoToXY(LCD_ROW1, LCD_COLUMN1);
     276c:	81 e0       	ldi	r24, 0x01	; 1
@@ -6075,16 +6075,16 @@ void ToggleLed1 (void)
     2790:	df 91       	pop	r29
     2792:	08 95       	ret
 
-00002794 <ToggleLed2>:
+00002794 <Toggle2>:
 
-void ToggleLed2 (void)
+void Toggle2 (void)
 {
     2794:	df 93       	push	r29
     2796:	cf 93       	push	r28
     2798:	0f 92       	push	r0
     279a:	cd b7       	in	r28, 0x3d	; 61
     279c:	de b7       	in	r29, 0x3e	; 62
-	/*Toggle LED*/
+	/*Toggle */
 	u8 Local_u8PinState;
 	DIO_u8TogglePin(DIO_PORTA, DIO_PIN4);
     279e:	80 e0       	ldi	r24, 0x00	; 0
@@ -6101,7 +6101,7 @@ void ToggleLed2 (void)
 	if (Local_u8PinState == 0)
     27b6:	89 81       	ldd	r24, Y+1	; 0x01
     27b8:	88 23       	and	r24, r24
-    27ba:	89 f4       	brne	.+34     	; 0x27de <ToggleLed2+0x4a>
+    27ba:	89 f4       	brne	.+34     	; 0x27de <Toggle2+0x4a>
 	{
 		LCD_voidGoToXY(LCD_ROW1, LCD_COLUMN7);
     27bc:	81 e0       	ldi	r24, 0x01	; 1
@@ -6119,12 +6119,12 @@ void ToggleLed2 (void)
     27d4:	8f e6       	ldi	r24, 0x6F	; 111
     27d6:	90 e0       	ldi	r25, 0x00	; 0
     27d8:	0e 94 17 10 	call	0x202e	; 0x202e <LCD_voidSendString>
-    27dc:	13 c0       	rjmp	.+38     	; 0x2804 <ToggleLed2+0x70>
+    27dc:	13 c0       	rjmp	.+38     	; 0x2804 <Toggle2+0x70>
 	}
 	else if (Local_u8PinState == 1)
     27de:	89 81       	ldd	r24, Y+1	; 0x01
     27e0:	81 30       	cpi	r24, 0x01	; 1
-    27e2:	81 f4       	brne	.+32     	; 0x2804 <ToggleLed2+0x70>
+    27e2:	81 f4       	brne	.+32     	; 0x2804 <Toggle2+0x70>
 	{
 		LCD_voidGoToXY(LCD_ROW1, LCD_COLUMN7);
     27e4:	81 e0       	ldi	r24, 0x01	; 1
@@ -6149,16 +6149,16 @@ void ToggleLed2 (void)
     2808:	df 91       	pop	r29
     280a:	08 95       	ret
 
-0000280c <ToggleLed3>:
+0000280c <Toggle3>:
 
-void ToggleLed3 (void)
+void Toggle3 (void)
 {
     280c:	df 93       	push	r29
     280e:	cf 93       	push	r28
     2810:	0f 92       	push	r0
     2812:	cd b7       	in	r28, 0x3d	; 61
     2814:	de b7       	in	r29, 0x3e	; 62
-	/*Toggle LED*/
+	/*Toggle */
 	u8 Local_u8PinState;
 	DIO_u8TogglePin(DIO_PORTA, DIO_PIN7);
     2816:	80 e0       	ldi	r24, 0x00	; 0
@@ -6175,7 +6175,7 @@ void ToggleLed3 (void)
 	if (Local_u8PinState == 0)
     282e:	89 81       	ldd	r24, Y+1	; 0x01
     2830:	88 23       	and	r24, r24
-    2832:	89 f4       	brne	.+34     	; 0x2856 <ToggleLed3+0x4a>
+    2832:	89 f4       	brne	.+34     	; 0x2856 <Toggle3+0x4a>
 	{
 		LCD_voidGoToXY(LCD_ROW1, LCD_COLUMN13);
     2834:	81 e0       	ldi	r24, 0x01	; 1
@@ -6193,12 +6193,12 @@ void ToggleLed3 (void)
     284c:	8f e6       	ldi	r24, 0x6F	; 111
     284e:	90 e0       	ldi	r25, 0x00	; 0
     2850:	0e 94 17 10 	call	0x202e	; 0x202e <LCD_voidSendString>
-    2854:	13 c0       	rjmp	.+38     	; 0x287c <ToggleLed3+0x70>
+    2854:	13 c0       	rjmp	.+38     	; 0x287c <Toggle3+0x70>
 	}
 	else if (Local_u8PinState == 1)
     2856:	89 81       	ldd	r24, Y+1	; 0x01
     2858:	81 30       	cpi	r24, 0x01	; 1
-    285a:	81 f4       	brne	.+32     	; 0x287c <ToggleLed3+0x70>
+    285a:	81 f4       	brne	.+32     	; 0x287c <Toggle3+0x70>
 	{
 		LCD_voidGoToXY(LCD_ROW1, LCD_COLUMN13);
     285c:	81 e0       	ldi	r24, 0x01	; 1
